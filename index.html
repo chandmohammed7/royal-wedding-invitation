@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>निकाह-ए-मसनून | ताहिरा ख़ान & जावेद खाँ | सानिया ख़ान & समीर खाँ</title>
+  <meta name="description" content="शाही निकाह निमंत्रण - ताहिरा ख़ान हमराह जावेद खाँ एवं सानिया ख़ान हमराह समीर खाँ | तारखानी परिवार, कुचामन सिटी">
+  <meta property="og:title" content="निकाह-ए-मसनून | जश्न-ए-शादी निमंत्रण">
+  <meta property="og:description" content="शुक्रवार, 27 नवम्बर 2026 | 'ईदगाह' खान मोहल्ला, कुचामन सिटी | तारखानी परिवार आपका तहेदिल से इस्तकबाल करता है।">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#092e22">
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌙</text></svg>">
+</head>
+<body>
+
+  <!-- Floating Particles & Rose Petal Canvas -->
+  <canvas id="fxCanvas"></canvas>
+
+  <!-- Ambient Royal Background Pattern -->
+  <div class="royal-bg-pattern"></div>
+
+  <!-- ==========================================================================
+       3D ROYAL ENVELOPE OPENING CEREMONY OVERLAY
+       ========================================================================== -->
+  <div id="envelopeOverlay" class="envelope-overlay">
+    <!-- Velvet Curtains -->
+    <div class="curtain-panel curtain-left"></div>
+    <div class="curtain-panel curtain-right"></div>
+
+    <!-- 3D Envelope Box -->
+    <div id="envelopeWrapper" class="envelope-3d-wrapper" title="कार्ड खोलने के लिए यहाँ टैप करें">
+      <div class="envelope-body">
+        <div class="envelope-pattern"></div>
+        <div class="envelope-corner-ornament corner-tl"></div>
+        <div class="envelope-corner-ornament corner-tr"></div>
+        <div class="envelope-corner-ornament corner-bl"></div>
+        <div class="envelope-corner-ornament corner-br"></div>
+
+        <div class="envelope-bismillah">﷽</div>
+        <div class="envelope-tag">दावत-ए-निकाह</div>
+        <div class="envelope-couples">
+          ताहिरा ख़ान & जावेद खाँ
+          <span>एवं</span>
+          सानिया ख़ान & समीर खाँ
+        </div>
+
+        <!-- 3D Wax Seal -->
+        <div id="waxSeal" class="wax-seal" title="सील पर क्लिक करें">
+          <div class="wax-seal-symbol">786</div>
+          <div class="wax-seal-text">तारखानी</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Open Invitation Button -->
+    <button id="openInvitationBtn" class="open-invitation-btn">
+      <span>✉️</span> निमंत्रण पत्र खोलें (Open Invitation)
+    </button>
+    <div class="touch-hint">शाही कार्ड खोलने और शहनाई संगीत शुरू करने के लिए टैप करें</div>
+  </div>
+
+  <!-- ==========================================================================
+       PERSISTENT FLOATING CONTROLS
+       ========================================================================== -->
+  <div class="floating-actions-bar">
+    <!-- Music Toggle -->
+    <button id="audioToggleBtn" class="floating-btn" aria-label="संगीत चालू / बंद करें" title="संगीत चालू / बंद करें">
+      <div id="soundWaves" class="sound-waves sound-paused">
+        <div class="sound-bar"></div>
+        <div class="sound-bar"></div>
+        <div class="sound-bar"></div>
+        <div class="sound-bar"></div>
+      </div>
+      <span class="btn-tooltip">शहनाई संगीत (Audio)</span>
+    </button>
+
+    <!-- Flower Shower Button -->
+    <button id="showerFlowersBtn" class="floating-btn" aria-label="फूल और दुआएं बरसाएं" title="फूल बरसाएं">
+      🌸
+      <span class="btn-tooltip">फूल बरसाएं (Shower Petals)</span>
+    </button>
+  </div>
+
+  <!-- ==========================================================================
+       MAIN INVITATION CARD EXPERIENCE
+       ========================================================================== -->
+  <main class="main-invitation-wrapper">
+    <article class="royal-card">
+      <!-- Ornate Gold Corner Motifs -->
+      <div class="card-corner-motif card-c-tl"></div>
+      <div class="card-corner-motif card-c-tr"></div>
+      <div class="card-corner-motif card-c-bl"></div>
+      <div class="card-corner-motif card-c-br"></div>
+
+      <!-- Header Section: 786, Calligraphy, Shayari -->
+      <header class="header-emblem">
+        <div class="bismillah-crest">
+          <div class="arabic-786-badge">
+            <span class="crescent-star">☪</span>
+            <span class="number-786">786</span>
+          </div>
+          <div class="bismillah-calligraphy">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+        </div>
+
+        <div class="header-top-shayari">
+          <p class="shayari-verse">
+            "करम जिसका रकीब होता है, बन जाते है रिश्ते-नाते, जहां जिसका नसीब होता है ॥"
+          </p>
+        </div>
+
+        <div class="main-event-badge">
+          <h1 class="grand-title">॥ निकाह - ए - मसनून ॥</h1>
+          <div class="grand-subtitle">॥ जश्न - ए - शादी ॥</div>
+        </div>
+
+        <div class="auspicious-date-ribbon">
+          <div class="ribbon-pill">17 जमादिउल आखिर, 1448 हिजरी</div>
+          <div class="ribbon-pill highlight">शुक्रवार, 27 नवम्बर 2026 (बरोज जुम्मा)</div>
+        </div>
+
+        <div class="respectful-greeting">
+          <p><strong>मोहतरम जनाब,</strong></p>
+          <p>
+            अलहम्दु लिल्लाह, अल्लाह तआला के फजलो करम से हमारे यहां शादी का मुबारक़ प्रोग्राम होना करार पाया है। 
+            लिहाजा आपसे गुजारिश है कि प्रोग्राम में शिरकत फरमाकर दुल्हा-दुल्हन को अपनी नेक दुआओं से नवाजें।
+          </p>
+        </div>
+      </header>
+
+      <!-- Live Countdown Timer -->
+      <section class="countdown-section" aria-label="शादी का काउंटडाउन">
+        <div class="countdown-heading">
+          <span>⏳</span> मुक़द्दस निकाह में शेष समय <span>⏳</span>
+        </div>
+        <div class="countdown-grid">
+          <div class="countdown-box">
+            <div id="countDays" class="count-number">00</div>
+            <div class="count-label">दिन (Days)</div>
+          </div>
+          <div class="countdown-box">
+            <div id="countHours" class="count-number">00</div>
+            <div class="count-label">घंटे (Hours)</div>
+          </div>
+          <div class="countdown-box">
+            <div id="countMins" class="count-number">00</div>
+            <div class="count-label">मिनट (Mins)</div>
+          </div>
+          <div class="countdown-box">
+            <div id="countSecs" class="count-number">00</div>
+            <div class="count-label">सेकंड (Secs)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Divider -->
+      <div class="section-divider-ornament">
+        <span class="ornament-line"></span>
+        <span class="ornament-center">❦ दो मुक़द्दस जोड़ियां ❦</span>
+        <span class="ornament-line"></span>
+      </div>
+
+      <!-- ==========================================================================
+           DUAL COUPLES SPOTLIGHT (दो जोड़ियां)
+           ========================================================================== -->
+      <section class="couples-container">
+        <!-- Couple 1: ताहिरा ख़ान & जावेद खाँ -->
+        <div class="couple-card">
+          <div class="couple-badge-header">
+            <span>प्रथम निकाह (First Sacred Knot)</span>
+          </div>
+          <div class="couple-duo-grid">
+            <!-- Dulhan -->
+            <div class="person-box">
+              <span class="person-role">दुल्हन (Bride)</span>
+              <h2 class="person-name">ताहिरा ख़ान</h2>
+              <div class="person-details">
+                <p><strong>पोती:</strong> जनाब सत्तार खां जी तारखानी</p>
+                <p><strong>दुख्तर:</strong> सिकन्दर खान तारखानी</p>
+              </div>
+              <div class="person-mukam">मुकाम - कुचामन सिटी</div>
+            </div>
+
+            <!-- Central "हमराह" Crest -->
+            <div class="hamrah-divider">
+              <div class="hamrah-heart-badge">
+                <span class="hamrah-text">हमराह</span>
+                <span class="hamrah-icon">❤</span>
+              </div>
+            </div>
+
+            <!-- Dulha -->
+            <div class="person-box">
+              <span class="person-role">दूल्हा (Groom)</span>
+              <h2 class="person-name">जावेद खाँ</h2>
+              <div class="person-details">
+                <p><strong>पोता:</strong> मरहूम हाजी गफ्फार खाँ जी मलवान</p>
+                <p><strong>फरजन्द:</strong> जनाब बोदू खाँ मलवान</p>
+              </div>
+              <div class="person-mukam">मुकाम - खाचारियावास</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Couple 2: सानिया ख़ान & समीर खाँ -->
+        <div class="couple-card">
+          <div class="couple-badge-header">
+            <span>द्वितीय निकाह (Second Sacred Knot)</span>
+          </div>
+          <div class="couple-duo-grid">
+            <!-- Dulhan -->
+            <div class="person-box">
+              <span class="person-role">दुल्हन (Bride)</span>
+              <h2 class="person-name">सानिया ख़ान</h2>
+              <div class="person-details">
+                <p><strong>पोती:</strong> जनाब सत्तार खां जी तारखानी</p>
+                <p><strong>दुख्तर:</strong> सिकन्दर खान तारखानी</p>
+              </div>
+              <div class="person-mukam">मुकाम - कुचामन सिटी</div>
+            </div>
+
+            <!-- Central "हमराह" Crest -->
+            <div class="hamrah-divider">
+              <div class="hamrah-heart-badge">
+                <span class="hamrah-text">हमराह</span>
+                <span class="hamrah-icon">❤</span>
+              </div>
+            </div>
+
+            <!-- Dulha -->
+            <div class="person-box">
+              <span class="person-role">दूल्हा (Groom)</span>
+              <h2 class="person-name">समीर खाँ</h2>
+              <div class="person-details">
+                <p><strong>पोता:</strong> मरहूम कालू खाँ जी</p>
+                <p><strong>फरजन्द:</strong> जनाब अज़ीज़ खाँ कबीरखानी</p>
+              </div>
+              <div class="person-mukam">मुकाम - लाडनूं</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           PROGRAM-E-SHADI (ITINERARY TIMELINE)
+           ========================================================================== */
+      -->
+      <section class="program-section">
+        <div class="section-main-heading">
+          <h2>॥ प्रोग्राम - ए - शादी ॥</h2>
+          <p>मांगल्य रस्में और समारोह की शुभ तिथियां</p>
+        </div>
+
+        <div class="timeline-wrapper">
+          <!-- 1. रस्म-ए-बान -->
+          <div class="timeline-item">
+            <div class="timeline-dot">🏺</div>
+            <div class="timeline-card">
+              <div class="event-title-wrap">
+                <h3 class="event-name">रस्म-ए-बान</h3>
+                <span class="event-time-badge">शाम 5:00 बजे</span>
+              </div>
+              <div class="event-date-str">मंगलवार, 24 नवम्बर 2026</div>
+              <div class="event-desc">पारम्परिक रस्म व हल्दी-बान की मंगल शुरुआत।</div>
+            </div>
+          </div>
+
+          <!-- 2. रस्म-ए-मेहन्दी -->
+          <div class="timeline-item">
+            <div class="timeline-dot">🌿</div>
+            <div class="timeline-card">
+              <div class="event-title-wrap">
+                <h3 class="event-name">रस्म-ए-मेहन्दी</h3>
+                <span class="event-time-badge">शाम 7:00 बजे</span>
+              </div>
+              <div class="event-date-str">जुमेरात (गुरुवार), 26 नवम्बर 2026</div>
+              <div class="event-desc">खुशियों और सुरूर भरी शाम, हिना (मेहंदी) के गहरे रंगों के संग।</div>
+            </div>
+          </div>
+
+          <!-- 3. भात (मायरा) -->
+          <div class="timeline-item">
+            <div class="timeline-dot">🎁</div>
+            <div class="timeline-card">
+              <div class="event-title-wrap">
+                <h3 class="event-name">भात (मायरा)</h3>
+                <span class="event-time-badge">दोपहर 4:00 बजे</span>
+              </div>
+              <div class="event-date-str">जुम्मा (शुक्रवार), 27 नवम्बर 2026</div>
+              <div class="event-desc">ननिहाल पक्ष (मीठड़ी) द्वारा मायरे एवं शगुन की पारंपरिक रस्म।</div>
+            </div>
+          </div>
+
+          <!-- 4. दावत-ए-आम (Grand Feast) -->
+          <div class="timeline-item">
+            <div class="timeline-dot">🍲</div>
+            <div class="timeline-card event-highlight-card">
+              <div class="event-title-wrap">
+                <h3 class="event-name">दावत-ए-आम</h3>
+                <span class="event-time-badge">शाम 6:30 बजे से</span>
+              </div>
+              <div class="event-date-str">जुम्मा (शुक्रवार), 27 नवम्बर 2026</div>
+              <div class="event-desc">लज़ीज़ दस्तरख्वान व शाही दावत का आयोजन।</div>
+              <div class="event-venue-notice">
+                📍 <strong>मुकाम-ए-दावत:</strong> 'ईदगाह' खान मोहल्ला, कुचामन सिटी
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. बारात आमद -->
+          <div class="timeline-item">
+            <div class="timeline-dot">🎺</div>
+            <div class="timeline-card">
+              <div class="event-title-wrap">
+                <h3 class="event-name">बारात आमद</h3>
+                <span class="event-time-badge">शाम 7:00 बजे</span>
+              </div>
+              <div class="event-date-str">जुम्मा (शुक्रवार), 27 नवम्बर 2026</div>
+              <div class="event-desc">
+                जनाब बोदू खाँ मलवान (खाचारियावास) व जनाब अज़ीज़ खाँ कबीरखानी (लाडनूं) वालों के यहां से 'ईदगाह' खान मोहल्ला, कुचामन सिटी आयेगी।
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. रस्म-ए-निकाह -->
+          <div class="timeline-item">
+            <div class="timeline-dot">🌙</div>
+            <div class="timeline-card event-highlight-card">
+              <div class="event-title-wrap">
+                <h3 class="event-name">रस्म-ए-निकाह</h3>
+                <span class="event-time-badge">रात 8:00 बजे</span>
+              </div>
+              <div class="event-date-str">जुम्मा (शुक्रवार), 27 नवम्बर 2026</div>
+              <div class="event-desc">
+                ईश्वरीय बंदगी और कुबूलियत की मुक़द्दस घड़ी — जब दो पवित्र रूहें एक रिश्ते में बंधेंगी।
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Divider -->
+      <div class="section-divider-ornament">
+        <span class="ornament-line"></span>
+        <span class="ornament-center">❦ खानदान व आत्मीय जन ❦</span>
+        <span class="ornament-line"></span>
+      </div>
+
+      <!-- ==========================================================================
+           FAMILY & RELATIONS SHOWCASE (तारखानी खानदान व रिश्तेदार)
+           ========================================================================== -->
+      <section class="family-heritage-section">
+        <div class="family-grid">
+          <!-- 1. ननिहाल पक्ष -->
+          <div class="family-tile">
+            <h3 class="family-tile-title">॥ ननिहाल पक्ष ॥</h3>
+            <div class="family-tile-content">
+              <p><strong>नानाजी:</strong> मरहूम जस्सू खाँ इब्राहिमखानी</p>
+              <p><strong>मामाजी:</strong> तौफीक खाँ, रफीक खाँ, सदीक खाँ</p>
+              <p><strong>भाई:</strong> सोहिल खान, अकबर खान, रेहान खान, शालिक खान</p>
+              <p><strong>मुकाम:</strong> मीठड़ी (लाडनूँ)</p>
+            </div>
+          </div>
+
+          <!-- 2. फूफा पक्ष -->
+          <div class="family-tile">
+            <h3 class="family-tile-title">॥ फूफा पक्ष ॥</h3>
+            <div class="family-tile-content">
+              <p><strong>मुनीर खाँ</strong></p>
+              <p>मुकाम: अजमेर</p>
+            </div>
+          </div>
+
+          <!-- 3. खादू पक्ष -->
+          <div class="family-tile">
+            <h3 class="family-tile-title">॥ खादू पक्ष ॥</h3>
+            <div class="family-tile-content">
+              <p><strong>रिजवान खाँ</strong></p>
+              <p>मुकाम: गारिण्डा</p>
+            </div>
+          </div>
+
+          <!-- 4. भाई पक्ष -->
+          <div class="family-tile">
+            <h3 class="family-tile-title">॥ भाई पक्ष ॥</h3>
+            <div class="family-tile-content">
+              <p><strong>महफूज खान, सुल्तान खान</strong></p>
+            </div>
+          </div>
+
+          <!-- 5. आपके आमद के मुन्तज़िर -->
+          <div class="family-tile" style="grid-column: 1 / -1;">
+            <h3 class="family-tile-title">॥ आपके आमद के मुन्तज़िर ॥</h3>
+            <div class="family-tile-content">
+              <p style="font-size: 1.05rem; color: #fff3c4;">
+                मन्जूर खाँ, अमानत खाँ, अय्यूब खाँ, रज्जाक खाँ, अकरम खाँ, दानिश खाँ, सुल्तान खाँ व तमाम तारखानी परिवार।
+              </p>
+            </div>
+          </div>
+
+          <!-- 6. नन्ही फरमाईश -->
+          <div class="nanhi-farmaish-card">
+            <h3 class="family-tile-title">॥ नन्ही फरमाईश ॥</h3>
+            <p class="nanhi-shayari">
+              "नन्हें दिल में प्यार लिए, पलकें बिछायें बैठे हैं,<br>
+              आयेंगे आप शादी में हम इस्तकबाल के लिए हार लिए बैठे हैं :-"
+            </p>
+            <div class="kids-tag-cloud">
+              <span class="kid-name-pill">नाजिया</span>
+              <span class="kid-name-pill">इमारा</span>
+              <span class="kid-name-pill">आलिया</span>
+              <span class="kid-name-pill">खुशी</span>
+              <span class="kid-name-pill">तसलिम</span>
+              <span class="kid-name-pill">रेहान</span>
+              <span class="kid-name-pill">रेहाना</span>
+              <span class="kid-name-pill">रुमाइशा</span>
+              <span class="kid-name-pill">आइशा</span>
+              <span class="kid-name-pill">अरजलान</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           HOST (नियाज़मन्द) & VENUE ACTIONS SECTION
+           ========================================================================== -->
+      <section class="host-venue-card">
+        <div class="host-title">:: नियाज़मन्द (Host) ::</div>
+        <h3 class="host-name">सिकन्दर खाँ तारखानी वल्द सत्तार खाँ जी तारखानी</h3>
+        <p class="host-address">
+          नृसिंह जी के मंदिर के पीछे, खान मोहल्ला, कुचामन सिटी,<br>
+          जिला डीडवाना-कुचामन (राजस्थान)
+        </p>
+
+        <a href="tel:+918107911057" class="contact-number" title="कॉल करने के लिए टैप करें">
+          <span>📞</span> +91 8107911057
+        </a>
+
+        <!-- Interactive Quick Action Buttons -->
+        <div class="actions-grid">
+          <!-- WhatsApp RSVP -->
+          <a href="https://wa.me/918107911057?text=%E0%A4%85%E0%A4%B8%E0%A5%8D%E0%A4%B8%E0%A4%B2%E0%A4%BE%E0%A4%AE%20%E0%A4%B5%E0%A4%BE%E0%A4%B2%E0%A5%87%E0%A4%95%E0%A5%81%E0%A4%AE%20%E0%A4%B8%E0%A4%BF%E0%A4%95%E0%A4%A8%E0%A5%8D%E0%A4%A6%E0%A4%B0%20%E0%A4%9C%E0%A5%80%2C%20%E0%A4%A4%E0%A4%BE%E0%A4%B9%E0%A4%BF%E0%A4%B0%E0%A4%BE%20%E0%A4%96%E0%A4%BC%E0%A4%BE%E0%A4%A8%20%E0%A4%B5%20%E0%A4%B8%E0%A4%BE%E0%A4%A8%E0%A4%BF%E0%A4%AF%E0%A4%BE%20%E0%A4%96%E0%A4%BC%E0%A4%BE%E0%A4%A8%20%E0%A4%95%E0%A5%80%20%E0%A4%B6%E0%A4%BE%E0%A4%A6%E0%A5%80%20%E0%A4%95%E0%A5%80%20%E0%A4%AC%E0%A4%B9%E0%A5%81%E0%A4%A4-%E0%A4%AC%E0%A4%B9%E0%A5%81%E0%A4%A4%20%E0%A4%AE%E0%A5%81%E0%A4%AC%E0%A4%BE%E0%A4%B0%E0%A4%95%E0%A4%AC%E0%A4%BE%E0%A4%A6!%20%E0%A4%B9%E0%A4%AE%20%E0%A4%B6%E0%A4%BE%E0%A4%A6%E0%A5%80%20%E0%A4%95%E0%A5%87%20%E0%A4%9C%E0%A4%B6%E0%A5%8D%E0%A4%A8%20%E0%A4%AE%E0%A5%87%E0%A4%82%20%E0%A4%9C%E0%A4%BC%E0%A4%B0%E0%A5%82%E0%A4%B0%20%E0%A4%B6%E0%A4%B0%E0%A5%80%E0%A4%95%20%E0%A4%B9%E0%A5%8B%E0%A4%82%E0%A4%97%E0%A5%87%E0%A5%A4" 
+             target="_blank" rel="noopener noreferrer" class="action-btn btn-whatsapp">
+            <span>💬</span> मुबारकबाद / RSVP
+          </a>
+
+          <!-- Google Maps Venue Location -->
+          <a href="https://www.google.com/maps/search/?api=1&query=Eidgah+Khan+Mohalla+Kuchaman+City+Didwana+Rajasthan" 
+             target="_blank" rel="noopener noreferrer" class="action-btn btn-maps">
+            <span>📍</span> विवाह स्थल रास्ता (Map)
+          </a>
+
+          <!-- Add to Calendar -->
+          <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=%E0%A4%A8%E0%A4%BF%E0%A4%95%E0%A4%BE%E0%A4%B9-%E0%A4%8F-%E0%A4%AE%E0%A4%B8%E0%A4%A8%E0%A5%82%E0%A4%A8%20(%E0%A4%A4%E0%A4%BE%E0%A4%B9%E0%A4%BF%E0%A4%B0%E0%A4%BE%20%26%20%E0%A4%9C%E0%A4%BE%E0%A4%B5%E0%A5%87%E0%A4%A6%20%7C%20%E0%A4%B8%E0%A4%BE%E0%A4%A8%E0%A4%BF%E0%A4%AF%E0%A4%BE%20%26%20%E0%A4%B8%E0%A4%AE%E0%A5%80%E0%A4%B0)&dates=20261127T130000Z/20261127T183000Z&details=%E0%A4%A6%E0%A4%BE%E0%A4%B5%E0%A4%A4-%E0%A4%8F-%E0%A4%86%E0%A4%AE%20%E0%A4%B5%20%E0%A4%B0%E0%A4%B8%E0%A5%8D%E0%A4%AE-%E0%A4%8F-%E0%A4%A8%E0%A4%BF%E0%A4%95%E0%A4%BE%E0%A4%B9%20%E0%A4%A4%E0%A4%BE%E0%A4%B0%E0%A4%96%E0%A4%BE%E0%A4%A8%E0%A5%80%20%E0%A4%AA%E0%A4%B0%E0%A4%BF%E0%A4%B5%E0%A4%BE%E0%A4%B0&location=%E0%A4%88%E0%A4%A6%E0%A4%97%E0%A4%BE%E0%A4%B9%20%E0%A4%96%E0%A4%BE%E0%A4%A8%20%E0%A4%AE%E0%A5%8B%E0%A4%B9%E0%A4%B2%E0%A5%8D%E0%A4%B2%E0%A4%BE%2C%20%E0%A4%95%E0%A5%81%E0%A4%9 advocates%20%E0%A4%95%E0%A5%81%E0%A4%9A%E0%A4%BE%E0%A4%AE%E0%A4%A8%20%E0%A4%B8%E0%A4%BF%E0%A4%9F%E0%A5%80" 
+             target="_blank" rel="noopener noreferrer" class="action-btn btn-calendar">
+            <span>📅</span> कैलेंडर में जोड़ें (Calendar)
+          </a>
+
+          <!-- Share Button -->
+          <button id="shareInviteBtn" class="action-btn btn-share">
+            <span>🔗</span> आमंत्रण शेयर करें (Share)
+          </button>
+        </div>
+      </section>
+
+      <!-- Footer Shayari & Slogan -->
+      <footer class="footer-welcome-banner">
+        <p class="footer-shayari">
+          "जरा तकलीफ तो होगी यकीनन आने जाने में,<br>
+          मगर खुशियां मेरी बढ़ जायेगी आपके तशरीफ लाने में ॥"
+        </p>
+
+        <div class="khandan-welcome">
+          तारखानी खानदान आपका तहेदिल से इस्तकबाल करता है।
+        </div>
+
+        <div class="credits-line">
+          प्रिंट सहयोग: रंकावत ऑफसेट, कुचामन सिटी :: 8875349265
+        </div>
+      </footer>
+    </article>
+  </main>
+
+  <script src="audio.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
