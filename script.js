@@ -328,20 +328,12 @@ function initEnvelopeCeremony() {
       }
     }, 200);
 
-    // Step 3: Trigger Royal Shehnai Melody
-    setTimeout(() => {
-      if (window.royalShehnai) {
-        window.royalShehnai.start();
-        updateAudioButtonState(true);
-      }
-    }, 450);
-
-    // Step 4: Part velvet curtains and reveal grand royal card
+    // Step 3: Part velvet curtains and reveal grand royal card with flower shower
     setTimeout(() => {
       overlay.classList.add('opened');
       window.showerFlowerPetals(80);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 1100);
+    }, 1000);
   }
 
   if (openBtn) openBtn.addEventListener('click', triggerOpen);
