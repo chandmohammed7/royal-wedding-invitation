@@ -1,22 +1,84 @@
 /**
  * ==========================================================================
  * ROYAL WEDDING INVITATION INTERACTIVE CONTROLLER & CANVAS FX
- * Couples: ताहिरा ख़ान & जावेद खाँ | सानिया ख़ान & समीर खाँ
- * Main Wedding Date: Friday, 27 November 2026
+ * Couples: ताहिरा खान & जावेद खाँ | सानिया खान & समीर खाँ
+ * Wedding Date: Friday, 27 November 2026 (17 जमादिउल आखिर, 1448 हिजरी)
  * ==========================================================================
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initGuestPersonalization();
   initParticleCanvas();
-  initCountdownTimer();
   initEnvelopeCeremony();
+  initCountdownTimer();
   initAudioControls();
-  initScrollAnimations();
-  initInteractiveActions();
+  initKidInteractions();
+  initActionButtons();
 });
 
 /* ==========================================================================
-   1. CANVAS ROSE PETALS & GOLDEN SPARKLES ENGINE
+   1. GUEST PERSONALIZATION ENGINE
+   ========================================================================== */
+let currentGuestName = 'अज़ीज़ मेहमॉन';
+
+function initGuestPersonalization() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const guestFromUrl = urlParams.get('guest') || urlParams.get('name');
+  
+  if (guestFromUrl && guestFromUrl.trim()) {
+    currentGuestName = guestFromUrl.trim();
+  }
+
+  updateGuestDisplays();
+
+  // Modal dialog controls
+  const modal = document.getElementById('guestNameModal');
+  const editBtn = document.getElementById('editGuestBtn');
+  const saveBtn = document.getElementById('saveGuestNameBtn');
+  const closeBtn = document.getElementById('closeGuestModalBtn');
+  const input = document.getElementById('guestNameInput');
+
+  if (editBtn && modal) {
+    editBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (input) input.value = currentGuestName === 'अज़ीज़ मेहमॉन' ? '' : currentGuestName;
+      modal.showModal();
+    });
+  }
+
+  if (closeBtn && modal) {
+    closeBtn.addEventListener('click', () => modal.close());
+  }
+
+  if (saveBtn && modal) {
+    saveBtn.addEventListener('click', () => {
+      if (input && input.value.trim()) {
+        currentGuestName = input.value.trim();
+        updateGuestDisplays();
+        showToast(`✨ अतिथि का नाम अपडेट हुआ: ${currentGuestName}`);
+      }
+      modal.close();
+    });
+  }
+}
+
+function updateGuestDisplays() {
+  const envelopeNameEl = document.getElementById('receptionGuestName');
+  const cardNames = document.querySelectorAll('.guest-name-display');
+
+  if (envelopeNameEl) envelopeNameEl.textContent = currentGuestName;
+  cardNames.forEach(el => el.textContent = currentGuestName);
+
+  // Update WhatsApp link text
+  const waBtn = document.getElementById('whatsappRsvpLink');
+  if (waBtn) {
+    const customMsg = `अस्सलाम वालेकुम सिकन्दर जी, ताहिरा खान व सानिया खान की शादी की बहुत-बहुत मुबारकबाद! मैं (${currentGuestName}) शादी के जश्न में ज़रूर शरीक होऊँगा/होऊँगी।`;
+    waBtn.href = `https://wa.me/918107911057?text=${encodeURIComponent(customMsg)}`;
+  }
+}
+
+/* ==========================================================================
+   2. CANVAS ROSE PETALS & GOLDEN STARDUST ENGINE
    ========================================================================== */
 let fxCanvas, ctx;
 let petals = [];
@@ -39,11 +101,11 @@ function initParticleCanvas() {
   }
 
   // Initialize gold sparkles
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 35; i++) {
     sparkles.push(createSparkle());
   }
 
-  // Track cursor/touch for golden fairy dust
+  // Track cursor / touch for golden fairy dust
   window.addEventListener('mousemove', (e) => {
     addCursorSparkle(e.clientX, e.clientY);
   });
@@ -58,25 +120,26 @@ function initParticleCanvas() {
 }
 
 function resizeCanvas() {
+  if (!fxCanvas) return;
   fxCanvas.width = window.innerWidth;
   fxCanvas.height = window.innerHeight;
 }
 
 function createPetal(randomY = false) {
   const colors = [
-    'rgba(185, 20, 45, 0.85)',   // Deep Crimson Rose
-    'rgba(220, 38, 65, 0.8)',    // Vivid Rose
-    'rgba(140, 15, 30, 0.9)',    // Royal Velvet Maroon
-    'rgba(240, 100, 120, 0.75)', // Soft Rose Blush
-    'rgba(212, 160, 45, 0.75)'   // Golden Leaf Accent
+    'rgba(185, 20, 45, 0.88)',   // Deep Crimson Rose
+    'rgba(220, 38, 65, 0.82)',   // Vivid Rose
+    'rgba(140, 15, 30, 0.92)',   // Royal Velvet Maroon
+    'rgba(240, 100, 120, 0.78)', // Soft Rose Blush
+    'rgba(223, 168, 44, 0.78)'   // Golden Leaf Accent
   ];
 
   return {
-    x: Math.random() * fxCanvas.width,
-    y: randomY ? Math.random() * fxCanvas.height : -30,
-    size: 10 + Math.random() * 16,
+    x: Math.random() * (fxCanvas ? fxCanvas.width : 1200),
+    y: randomY ? Math.random() * (fxCanvas ? fxCanvas.height : 800) : -30,
+    size: 11 + Math.random() * 16,
     color: colors[Math.floor(Math.random() * colors.length)],
-    speedY: 1.0 + Math.random() * 2.0,
+    speedY: 1.0 + Math.random() * 2.2,
     speedX: Math.sin(Math.random() * Math.PI * 2) * 1.2,
     angle: Math.random() * Math.PI * 2,
     angleSpeed: (Math.random() - 0.5) * 0.04,
@@ -89,9 +152,9 @@ function createPetal(randomY = false) {
 
 function createSparkle() {
   return {
-    x: Math.random() * fxCanvas.width,
-    y: Math.random() * fxCanvas.height,
-    radius: 1 + Math.random() * 2.5,
+    x: Math.random() * (fxCanvas ? fxCanvas.width : 1200),
+    y: Math.random() * (fxCanvas ? fxCanvas.height : 800),
+    radius: 1 + Math.random() * 2.8,
     color: 'rgba(255, 225, 120, ',
     alpha: 0.2 + Math.random() * 0.8,
     alphaSpeed: 0.015 + Math.random() * 0.02,
@@ -101,22 +164,23 @@ function createSparkle() {
 }
 
 function addCursorSparkle(x, y) {
-  if (cursorParticles.length > 35) return;
+  if (cursorParticles.length > 30) return;
   cursorParticles.push({
-    x: x + (Math.random() - 0.5) * 10,
-    y: y + (Math.random() - 0.5) * 10,
+    x: x + (Math.random() - 0.5) * 8,
+    y: y + (Math.random() - 0.5) * 8,
     vx: (Math.random() - 0.5) * 2,
     vy: (Math.random() - 0.5) * 2 - 0.8,
-    radius: 1.5 + Math.random() * 3,
+    radius: 1.5 + Math.random() * 2.5,
     alpha: 1,
     color: Math.random() > 0.3 ? '#ffd700' : '#ff9ebb'
   });
 }
 
 function animateFX() {
+  if (!ctx || !fxCanvas) return;
   ctx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
 
-  // Draw & update floating sparkles
+  // Draw floating sparkles
   for (let i = 0; i < sparkles.length; i++) {
     const s = sparkles[i];
     if (s.increasing) {
@@ -138,12 +202,12 @@ function animateFX() {
     ctx.shadowBlur = 0;
   }
 
-  // Draw & update cursor sparkles
+  // Draw cursor sparkles
   for (let i = cursorParticles.length - 1; i >= 0; i--) {
     const cp = cursorParticles[i];
     cp.x += cp.vx;
     cp.y += cp.vy;
-    cp.alpha -= 0.035;
+    cp.alpha -= 0.04;
 
     if (cp.alpha <= 0) {
       cursorParticles.splice(i, 1);
@@ -155,13 +219,13 @@ function animateFX() {
     ctx.beginPath();
     ctx.arc(cp.x, cp.y, cp.radius, 0, Math.PI * 2);
     ctx.fillStyle = cp.color;
-    ctx.shadowBlur = 10;
+    ctx.shadowBlur = 8;
     ctx.shadowColor = '#ffd700';
     ctx.fill();
     ctx.restore();
   }
 
-  // Draw & update rose petals
+  // Draw rose petals
   for (let i = 0; i < petals.length; i++) {
     const p = petals[i];
     p.sway += p.swaySpeed;
@@ -179,7 +243,6 @@ function animateFX() {
     ctx.rotate(p.angle);
     ctx.scale(1, Math.sin(p.flip));
 
-    // Curved rose petal shape
     ctx.beginPath();
     ctx.moveTo(0, -p.size * 0.6);
     ctx.bezierCurveTo(p.size * 0.8, -p.size * 0.6, p.size * 0.9, p.size * 0.5, 0, p.size * 0.8);
@@ -195,24 +258,24 @@ function animateFX() {
   animFrameId = requestAnimationFrame(animateFX);
 }
 
-// Grand flower shower burst
-window.showerFlowerPetals = function(burstCount = 60) {
+// Grand Flower Shower
+window.showerFlowerPetals = function(burstCount = 70) {
+  if (!fxCanvas) return;
   for (let i = 0; i < burstCount; i++) {
     const p = createPetal(false);
-    p.x = fxCanvas.width * (0.2 + Math.random() * 0.6);
-    p.y = -20 - Math.random() * 150;
-    p.speedY = 3.5 + Math.random() * 4;
+    p.x = fxCanvas.width * (0.15 + Math.random() * 0.7);
+    p.y = -20 - Math.random() * 180;
+    p.speedY = 3.5 + Math.random() * 4.5;
     p.speedX = (Math.random() - 0.5) * 4;
     petals.push(p);
   }
 
-  // Also spawn burst of golden stardust
   for (let i = 0; i < 40; i++) {
     cursorParticles.push({
-      x: fxCanvas.width / 2 + (Math.random() - 0.5) * 200,
-      y: fxCanvas.height / 3 + (Math.random() - 0.5) * 100,
-      vx: (Math.random() - 0.5) * 8,
-      vy: (Math.random() - 0.5) * 8 - 2,
+      x: fxCanvas.width / 2 + (Math.random() - 0.5) * 250,
+      y: fxCanvas.height / 3 + (Math.random() - 0.5) * 150,
+      vx: (Math.random() - 0.5) * 9,
+      vy: (Math.random() - 0.5) * 9 - 2,
       radius: 2 + Math.random() * 4,
       alpha: 1,
       color: '#ffd700'
@@ -223,54 +286,109 @@ window.showerFlowerPetals = function(burstCount = 60) {
 };
 
 /* ==========================================================================
-   2. ENVELOPE OPENING CEREMONY
+   3. 3D ENVELOPE OPENING CEREMONY (PHASED GRAND REVEAL)
    ========================================================================== */
 function initEnvelopeCeremony() {
   const overlay = document.getElementById('envelopeOverlay');
-  const openBtn = document.getElementById('openInvitationBtn');
-  const waxSeal = document.getElementById('waxSeal');
   const envelope = document.getElementById('envelopeWrapper');
+  const waxSeal = document.getElementById('waxSeal');
+  const openBtn = document.getElementById('openInvitationBtn');
 
-  function openEnvelope() {
-    if (!overlay || overlay.classList.contains('opened')) return;
+  let isOpening = false;
 
-    // Trigger flower shower burst
-    window.showerFlowerPetals(70);
+  function triggerOpen() {
+    if (isOpening || !overlay || overlay.classList.contains('opened')) return;
+    isOpening = true;
 
-    // Start Royal Shehnai melody
+    // Step 1: Crack Wax Seal with sound & sparkle burst
     if (window.royalShehnai) {
-      window.royalShehnai.start();
-      updateAudioButtonState(true);
+      window.royalShehnai.playSealBreakSound();
+    }
+    if (waxSeal) {
+      waxSeal.classList.add('broken');
     }
 
-    overlay.classList.add('opened');
+    // Spawn seal fragmentation particles
+    for (let i = 0; i < 25; i++) {
+      cursorParticles.push({
+        x: window.innerWidth / 2 + (Math.random() - 0.5) * 50,
+        y: window.innerHeight / 2 + (Math.random() - 0.5) * 50,
+        vx: (Math.random() - 0.5) * 12,
+        vy: (Math.random() - 0.5) * 12 - 3,
+        radius: 2 + Math.random() * 4,
+        alpha: 1,
+        color: Math.random() > 0.4 ? '#c81e32' : '#ffd700'
+      });
+    }
 
-    // Scroll to top of card smoothly
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Step 2: Unfold 3D Flap & Slide Inner Letter Up
+    setTimeout(() => {
+      if (envelope) {
+        envelope.classList.add('unfolding');
+      }
+    }, 200);
+
+    // Step 3: Trigger Royal Shehnai Melody
+    setTimeout(() => {
+      if (window.royalShehnai) {
+        window.royalShehnai.start();
+        updateAudioButtonState(true);
+      }
+    }, 450);
+
+    // Step 4: Part velvet curtains and reveal grand royal card
+    setTimeout(() => {
+      overlay.classList.add('opened');
+      window.showerFlowerPetals(80);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 1100);
   }
 
-  if (openBtn) openBtn.addEventListener('click', openEnvelope);
-  if (waxSeal) waxSeal.addEventListener('click', openEnvelope);
-  if (envelope) envelope.addEventListener('click', openEnvelope);
+  if (openBtn) openBtn.addEventListener('click', triggerOpen);
+  if (waxSeal) waxSeal.addEventListener('click', triggerOpen);
+  if (envelope) envelope.addEventListener('click', (e) => {
+    // Don't open if clicked the edit guest button
+    if (e.target && e.target.id === 'editGuestBtn') return;
+    triggerOpen();
+  });
 }
 
 /* ==========================================================================
-   3. LIVE COUNTDOWN TIMER (Friday, 27 November 2026, 18:30 IST)
+   4. LIVE MULTI-EVENT COUNTDOWN TIMER
    ========================================================================== */
 function initCountdownTimer() {
-  // 27 November 2026, 18:30:00 IST (UTC+05:30)
-  const weddingDate = new Date('2026-11-27T18:30:00+05:30').getTime();
-
   const daysEl = document.getElementById('countDays');
   const hoursEl = document.getElementById('countHours');
   const minsEl = document.getElementById('countMins');
   const secsEl = document.getElementById('countSecs');
+  const labelEl = document.getElementById('countdownEventLabel');
+  const tabs = document.querySelectorAll('.cd-tab');
 
-  function update() {
+  let targetTimestamp = new Date('2026-11-27T18:30:00+05:30').getTime();
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      const targetDateStr = tab.getAttribute('data-target');
+      const labelText = tab.getAttribute('data-label');
+
+      if (targetDateStr) {
+        targetTimestamp = new Date(targetDateStr).getTime();
+      }
+      if (labelEl && labelText) {
+        labelEl.textContent = labelText;
+      }
+      updateTimer();
+    });
+  });
+
+  function updateTimer() {
     const now = new Date().getTime();
-    const distance = weddingDate - now;
+    const distance = targetTimestamp - now;
 
-    if (distance < 0) {
+    if (distance <= 0) {
       if (daysEl) daysEl.textContent = '00';
       if (hoursEl) hoursEl.textContent = '00';
       if (minsEl) minsEl.textContent = '00';
@@ -289,12 +407,12 @@ function initCountdownTimer() {
     if (secsEl) secsEl.textContent = String(seconds).padStart(2, '0');
   }
 
-  update();
-  setInterval(update, 1000);
+  updateTimer();
+  setInterval(updateTimer, 1000);
 }
 
 /* ==========================================================================
-   4. AUDIO TOGGLE & CONTROLS
+   5. AUDIO CONTROLS
    ========================================================================== */
 function initAudioControls() {
   const audioBtn = document.getElementById('audioToggleBtn');
@@ -304,7 +422,7 @@ function initAudioControls() {
     if (window.royalShehnai) {
       const isPlaying = window.royalShehnai.toggle();
       updateAudioButtonState(isPlaying);
-      showToast(isPlaying ? '🎶 शहनाई संगीत जारी है' : '🔇 संगीत बंद किया गया');
+      showToast(isPlaying ? '🎶 शहनाई संगीत शुरू हुआ' : '🔇 संगीत बंद किया गया');
     }
   });
 }
@@ -324,67 +442,91 @@ function updateAudioButtonState(isPlaying) {
 }
 
 /* ==========================================================================
-   5. SCROLL REVEAL ANIMATIONS
+   6. KIDS "नन्ही फरमाईश" INTERACTIVE REACTION
    ========================================================================== */
-function initScrollAnimations() {
-  const elements = document.querySelectorAll('.couple-card, .timeline-item, .family-tile, .nanhi-farmaish-card');
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
+function initKidInteractions() {
+  const kidPills = document.querySelectorAll('.kid-name-pill');
+  const messages = [
+    'की ओर से ढेर सारा प्यार और मुबारकबाद! 💖',
+    'आपकी आमद के इंतज़ार में पलकें बिछाए बैठे हैं! 🌸',
+    'की तरफ से दिल से इस्तकबाल! ⭐',
+    'शादी के जश्न में आपका स्वागत करने को तैयार हैं! 🌹',
+    'की नन्ही दुआएं आपके साथ हैं! 🌙'
+  ];
 
-  elements.forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(24px)';
-    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-    observer.observe(el);
+  kidPills.forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      const kidName = pill.textContent.trim().replace(/^[^\w\s\u0900-\u097F]+/, '').trim();
+      const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+
+      // Sound chime
+      if (window.royalShehnai) {
+        window.royalShehnai.playChime();
+      }
+
+      // Sparkles at button position
+      const rect = pill.getBoundingClientRect();
+      for (let i = 0; i < 15; i++) {
+        cursorParticles.push({
+          x: rect.left + rect.width / 2 + (Math.random() - 0.5) * 20,
+          y: rect.top + rect.height / 2 + (Math.random() - 0.5) * 20,
+          vx: (Math.random() - 0.5) * 6,
+          vy: (Math.random() - 0.5) * 6 - 2,
+          radius: 2 + Math.random() * 3,
+          alpha: 1,
+          color: Math.random() > 0.5 ? '#ff758c' : '#ffd700'
+        });
+      }
+
+      showToast(`✨ ${kidName} ${randomMsg}`);
+    });
   });
 }
 
 /* ==========================================================================
-   6. INTERACTIVE ACTIONS (WHATSAPP RSVP, CALENDAR, MAP, SHARE)
+   7. INTERACTIVE ACTION BUTTONS
    ========================================================================== */
-function initInteractiveActions() {
-  // Shower Flowers Button
+function initActionButtons() {
+  // Flower Shower Floating Button
   const showerBtn = document.getElementById('showerFlowersBtn');
   if (showerBtn) {
     showerBtn.addEventListener('click', () => {
-      window.showerFlowerPetals(60);
+      window.showerFlowerPetals(75);
     });
   }
 
-  // Share Button
+  // Share Invitation Button
   const shareBtn = document.getElementById('shareInviteBtn');
   if (shareBtn) {
     shareBtn.addEventListener('click', async () => {
+      // Build personalized URL
+      const currentUrl = new URL(window.location.href);
+      if (currentGuestName && currentGuestName !== 'अज़ीज़ मेहमॉन') {
+        currentUrl.searchParams.set('guest', currentGuestName);
+      }
+
       const shareData = {
-        title: 'निकाह-ए-मसनून | ताहिरा ख़ान & जावेद खाँ | सानिया ख़ान & समीर खाँ',
-        text: '॥ जश्न - ए - शादी ॥ तारखानी परिवार आपका तहेदिल से इस्तकबाल करता है। 27 नवम्बर 2026, कुचामन सिटी। सादर आमंत्रित हैं!',
-        url: window.location.href
+        title: 'निकाह-ए-मसनून | ताहिरा खान & जावेद खाँ | सानिया खान & समीर खाँ',
+        text: `॥ जश्न - ए - शादी ॥ तारखानी परिवार आपका तहेदिल से इस्तकबाल करता है। 27 नवम्बर 2026, कुचामन सिटी। सादर आमंत्रित हैं!`,
+        url: currentUrl.toString()
       };
 
       if (navigator.share) {
         try {
           await navigator.share(shareData);
         } catch (err) {
-          copyToClipboard(window.location.href);
+          copyPersonalizedUrl(currentUrl.toString());
         }
       } else {
-        copyToClipboard(window.location.href);
+        copyPersonalizedUrl(currentUrl.toString());
       }
     });
   }
 }
 
-function copyToClipboard(text) {
+function copyPersonalizedUrl(text) {
   navigator.clipboard.writeText(text).then(() => {
-    showToast('✨ शादी के कार्ड का लिंक कॉपी हो गया!');
+    showToast('✨ शादी के कार्ड का लिंक कॉपी हो गया! अब आप इसे शेयर कर सकते हैं।');
   }).catch(() => {
     showToast('✨ लिंक: ' + text);
   });
